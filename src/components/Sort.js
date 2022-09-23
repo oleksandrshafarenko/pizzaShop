@@ -4,7 +4,8 @@ const sortItems = ['популярности', 'цене', 'алфавиту']
 
 const Sort = ({value, onClickSort}) => {
     const [activeSort, setActiveSort] = useState(true)
-
+console.log(22)
+console.log(22)
     return (
         <div onClick={() => setActiveSort(!activeSort)} className="sort">
             <div className="sort__label">
