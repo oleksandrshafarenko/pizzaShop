@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-const sortItems = ['популярности', 'цене', 'алфавиту']
+const sortItems = [{name:'популярності', sortProperyt: 'rating'}, {name:'ціні', sortProperyt: 'price'}, {name: 'алфавіту', sortProperyt: 'title'}]
 
 const Sort = ({value, onClickSort}) => {
     const [activeSort, setActiveSort] = useState(true)
-console.log(22)
-console.log(22)
+
     return (
+
         <div onClick={() => setActiveSort(!activeSort)} className="sort">
             <div className="sort__label">
                 <svg
@@ -21,16 +21,16 @@ console.log(22)
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортировка по:</b>
-                <span>{value}</span>
+                <b>Сортувати по:</b>
+                <span>{value.name }</span>
             </div>
             <div
                 className='sort__popup'
                 style={activeSort ? { display: 'none' } : null}
             >
                 <ul>
-                    {sortItems.map((elem, id) =>
-                        <li onClick={(e) => onClickSort(e.target.innerText)} key={id} className={value == elem ? "active" : ''}>{elem}</li>
+                    {sortItems.map((obj, id) =>
+                        <li onClick={() => onClickSort(obj)} key={id} className={value.sortProperyt == obj.sortProperyt ? "active" : ''}>{obj.name}</li>
                     )}
                 </ul>
             </div>

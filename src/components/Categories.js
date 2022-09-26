@@ -4,20 +4,22 @@ type CategoriesProps = {
     value: number,
     onChangeCategory: (idx: number) => void
 }
-const titleValue = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
+const titleValue = ['Всі', 'Мясні', 'Вегетаріанскі', 'Гриль', 'Гострі', 'Закриті']
 
-const Categories = () => {
-  const [title, setTitle] = useState('Мясные')
-
-  const trigerButton = (e) => {
-    setTitle(e.target.innerText)
-  }
+const Categories = ({value, onClickCategoris}) => {
+  
 
     return (
         <div className="categories">
-          <ul onClick={(e) => trigerButton(e)}>
+          <ul >
             {titleValue.map((elem, id) => 
-              <li key={id} className={title == elem ? "active" : ''} >{elem}</li>
+              <li 
+                key={id} 
+                onClick={() => onClickCategoris(id)}
+                className={value == id ? "active" : ''}
+                >
+                  {elem}
+              </li>
             )}
           </ul>
       </div>
