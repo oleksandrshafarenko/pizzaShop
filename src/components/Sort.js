@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-const sortItems = [{name:'популярності', sortProperyt: 'rating'}, {name:'ціні', sortProperyt: 'price'}, {name: 'алфавіту', sortProperyt: 'title'}]
+const sortItems = [
+    {name:'популярності (DESC)', sortProperyt: 'rating'},
+    {name:'популярності (ASC)', sortProperyt: '-rating'},
+    {name:'ціні (DESC)', sortProperyt: 'price'}, 
+    {name:'ціні (ASC)', sortProperyt: '-price'}, 
+    {name: 'алфавіту (DESC)', sortProperyt: 'title'},
+    {name: 'алфавіту (ASC)', sortProperyt: '-title'}]
 
 const Sort = ({value, onClickSort}) => {
     const [activeSort, setActiveSort] = useState(true)

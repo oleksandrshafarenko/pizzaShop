@@ -11,18 +11,18 @@ import { Route, Routes } from 'react-router-dom';
 import Card from './pages/Card';
 
 function App() {
-
+  const [findPizzaValue, setFindPizzaValue] = useState('')
 
 
 
   return (
     <div className="App">
           <div className="wrapper">
-            <Headers/>
+            <Headers searchValue={findPizzaValue} setValue={setFindPizzaValue}/>
       <div className="content">
         
     <Routes>
-      <Route path='/' element={<Home/>}/>
+      <Route path='/' element={<Home findPizza={findPizzaValue}/>}/>
       <Route path='*' element={<Card/>}/>
     </Routes>
         </div>
