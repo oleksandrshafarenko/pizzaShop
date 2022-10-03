@@ -13,7 +13,7 @@ const Headers = ({searchValue, setValue}) => {
             <img width="38" src={LogoSvg} alt="Pizza logo" />
             <div>
               <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
+              <p>краща піца в твому місті</p>
             </div>
           </div>
         </Link>

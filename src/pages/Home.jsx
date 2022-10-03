@@ -3,17 +3,38 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
+import Pagination from "../components/Pagination";
 
 const Home = ({ findPizza }) => {
     const [pizzaItem, setPizzaItem] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [sortItem, setSortItem] = useState({ name: 'популярності', sortProperyt: 'rating' })
     const [categorisItem, setCategorisItem] = useState(0)
-
+    const [pizzaTotalPages, setPizzaTotalPages] = useState(1)
+    const [isLoadingPage, setIsLoadingPage] = useState(false)
+    const [selectPage, setSelectPage] = useState(1)
 
     const skeletons = [...new Array(6)].map((_, id) => <Skeleton key={id} />)
     const renderPizza = pizzaItem.filter(obj => obj.title.toUpperCase().includes(findPizza.toUpperCase()))
         .map((elem, id) => <PizzaBlock key={elem.imageUrl} {...elem} />)
+
+    const howManyPage = (number) => {
+        const itemInPage = 4
+        const result = Math.ceil(number / itemInPage)
+        return setPizzaTotalPages(result)
+    }
+
+    useEffect(() => {
+        fetch(`https://6317b24bece2736550b95b29.mockapi.io/pizza`
+        )
+            .then(resp => resp.json())
+            .then(json => {
+                json.length > 1 &&  howManyPage(json.length);
+                setIsLoadingPage(true)
+            })
+    }, [])
+
+  
 
     useEffect(() => {
         setIsLoading(true)
@@ -21,7 +42,7 @@ const Home = ({ findPizza }) => {
         const sortBy = sortItem.sortProperyt.replace('-', '')
         const category = categorisItem > 0 ? `category=${categorisItem}` : ''
 
-        fetch(`https://6317b24bece2736550b95b29.mockapi.io/pizza?${category}&sortBy=${sortBy}&order=${order}`
+        fetch(`https://6317b24bece2736550b95b29.mockapi.io/pizza?page=${selectPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}`
         )
             .then(resp => resp.json())
             .then(json => {
@@ -29,8 +50,8 @@ const Home = ({ findPizza }) => {
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [categorisItem, sortItem])
-
+    }, [categorisItem, sortItem, selectPage, findPizza])
+console.log(selectPage)
     return (
         <>
             <div className="container">
@@ -42,6 +63,7 @@ const Home = ({ findPizza }) => {
                 <div className="content__items">
                     {isLoading ? skeletons : renderPizza}
                 </div>
+                {isLoadingPage && <Pagination valuePdge={selectPage} onClickSelectPage={(number) => setSelectPage(number)} pageQuantity={pizzaTotalPages}/>}
             </div>
         </>
     )
