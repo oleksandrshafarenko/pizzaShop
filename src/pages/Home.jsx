@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,  useContext }  from "react";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
+import { SearchContext } from "../App";
 
-const Home = ({ findPizza }) => {
+const Home = () => {
     const [pizzaItem, setPizzaItem] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [sortItem, setSortItem] = useState({ name: 'популярності', sortProperyt: 'rating' })
@@ -13,9 +14,11 @@ const Home = ({ findPizza }) => {
     const [pizzaTotalPages, setPizzaTotalPages] = useState(1)
     const [isLoadingPage, setIsLoadingPage] = useState(false)
     const [selectPage, setSelectPage] = useState(1)
+    const [AllPizzaItems, setAllPizzaItems] = useState()
+    const {findPizzaValue} = useContext(SearchContext)
 
     const skeletons = [...new Array(6)].map((_, id) => <Skeleton key={id} />)
-    const renderPizza = pizzaItem.filter(obj => obj.title.toUpperCase().includes(findPizza.toUpperCase()))
+    const renderPizza = pizzaItem.filter(obj => obj.title.toUpperCase().includes(findPizzaValue.toUpperCase()))
         .map((elem, id) => <PizzaBlock key={elem.imageUrl} {...elem} />)
 
     const howManyPage = (number) => {
@@ -50,8 +53,8 @@ const Home = ({ findPizza }) => {
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [categorisItem, sortItem, selectPage, findPizza])
-console.log(selectPage)
+    }, [categorisItem, sortItem, selectPage, findPizzaValue])
+
     return (
         <>
             <div className="container">

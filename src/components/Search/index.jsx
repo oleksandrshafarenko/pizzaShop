@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { SearchContext } from "../../App";
 import styles from './Search.module.scss'
 
-const Search = ({ searchValue, setValue }) => {
-    console.log(searchValue)
-    const onClickClear = () => {
-        setValue('')
-    }
+const Search = () => {
+    const {findPizzaValue, setFindPizzaValue} = useContext(SearchContext)
+
+
     return (
         <div className={styles.root}>
             <svg
@@ -42,12 +42,12 @@ const Search = ({ searchValue, setValue }) => {
                 />
             </svg>
             <input
-                value={searchValue}
-                onChange={(e) => setValue(e.target.value)}
+                value={findPizzaValue}
+                onChange={(e) => setFindPizzaValue(e.target.value)}
                 className={styles.input}
                 placeholder="Пошук піци" />
-            {searchValue && <svg
-                onClick={onClickClear}
+            {findPizzaValue && <svg
+                onClick={() => setFindPizzaValue('')}
                 className={styles.clearIcon}
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
