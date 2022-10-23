@@ -7,7 +7,6 @@ type CategoriesProps = {
 const titleValue = ['Всі', 'Мясні', 'Вегетаріанскі', 'Гриль', 'Гострі', 'Закриті']
 
 const Categories = ({value, onClickCategoris}) => {
-  
 
     return (
         <div className="categories">
@@ -16,7 +15,7 @@ const Categories = ({value, onClickCategoris}) => {
               <li 
                 key={id} 
                 onClick={() => onClickCategoris(id)}
-                className={value == id ? "active" : ''}
+                className={value === id ? "active" : ''}
                 >
                   {elem}
               </li>

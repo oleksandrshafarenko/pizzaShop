@@ -4,7 +4,7 @@ import styles from './Pagination.module.scss'
 
 const Pagination = ({valuePdge, pageQuantity, onClickSelectPage }) => {
 const currentPage = 1
-console.log(valuePdge)
+
     return (
         <ReactPaginate
             className={styles.root}

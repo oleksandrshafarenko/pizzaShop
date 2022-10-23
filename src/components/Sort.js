@@ -12,7 +12,6 @@ const Sort = ({value, onClickSort}) => {
     const [activeSort, setActiveSort] = useState(true)
 
     return (
-
         <div onClick={() => setActiveSort(!activeSort)} className="sort">
             <div className="sort__label">
                 <svg
