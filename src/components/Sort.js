@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const sortItems = [
+export const sortItems = [
     {name:'популярності (DESC)', sortProperyt: 'rating'},
     {name:'популярності (ASC)', sortProperyt: '-rating'},
     {name:'ціні (DESC)', sortProperyt: 'price'}, 

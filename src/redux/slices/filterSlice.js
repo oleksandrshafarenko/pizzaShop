@@ -20,12 +20,17 @@ const filterSlice = createSlice({
         },
         setCurrentPage(state, action) {
             state.currentPage= action.payload
+        },
+        setFilters(state, action) {
+            state.currentPage = Number(action.payload.currentPage)
+            state.sort = action.payload.sort
+            state.categoriItem = Number(action.payload.categoriItem)
         }
     }
 })
 
 
 
-export const { setCategory, setSort, setCurrentPage } = filterSlice.actions
+export const { setCategory, setSort, setCurrentPage,setFilters } = filterSlice.actions
 
 export default filterSlice.reducer

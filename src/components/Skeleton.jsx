@@ -3,8 +3,9 @@ import ContentLoader from "react-content-loader"
 
 function Skeleton(props) {
     return (
+        <div style ={{paddingLeft: "20px"}}>
 
-
+        
         <ContentLoader
             className='pizza-block'
             speed={2}
@@ -15,14 +16,15 @@ function Skeleton(props) {
             foregroundColor="#ecebeb"
             {...props}
         >
-            <rect x="0" y="305" rx="3" ry="3" width="280" height="0" />
-            <rect x="0" y="316" rx="3" ry="3" width="280" height="0" />
-            <circle cx="140" cy="120" r="120" />
-            <rect x="0" y="270" rx="10" ry="10" width="280" height="25" />
-            <rect x="0" y="310" rx="16" ry="16" width="280" height="88" />
-            <rect x="0" y="430" rx="10" ry="10" width="91" height="30" />
-            <rect x="125" y="420" rx="26" ry="26" width="152" height="45" />
+            <rect x="20" y="305" rx="3" ry="3" width="280" height="0" />
+            <rect x="20" y="316" rx="3" ry="3" width="280" height="0" />
+            <circle cx="160" cy="120" r="120" />
+            <rect x="20" y="270" rx="10" ry="10" width="280" height="25" />
+            <rect x="20" y="310" rx="16" ry="16" width="280" height="88" />
+            <rect x="20" y="430" rx="10" ry="10" width="91" height="30" />
+            <rect x="145" y="420" rx="26" ry="26" width="152" height="45" />
         </ContentLoader>
+        </div>
     )
 
   
