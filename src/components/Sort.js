@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 export const sortItems = [
     {name:'популярності (DESC)', sortProperyt: 'rating'},
@@ -10,9 +10,23 @@ export const sortItems = [
 
 const Sort = ({value, onClickSort}) => {
     const [activeSort, setActiveSort] = useState(true)
+    const sortRef = useRef()
 
+    useState(() => {
+        console.log('mount')
+        const handleClick = (event) => {
+            if(!event.path.includes(sortRef.current)){
+                setActiveSort(true)
+                console.log('click')
+            }
+        }
+
+        document.body.addEventListener('click', handleClick)
+
+        return () => document.body.removeEventListener('click', handleClick)
+    }, [])
     return (
-        <div onClick={() => setActiveSort(!activeSort)} className="sort">
+        <div ref={sortRef} onClick={() => setActiveSort(!activeSort)} className="sort">
             <div className="sort__label">
                 <svg
                     width="10"
@@ -35,7 +49,12 @@ const Sort = ({value, onClickSort}) => {
             >
                 <ul>
                     {sortItems.map((obj, id) =>
-                        <li onClick={() => onClickSort(obj)} key={id} className={value.sortProperyt == obj.sortProperyt ? "active" : ''}>{obj.name}</li>
+                        <li onClick={() => onClickSort(obj)} 
+                                key={id} 
+                                className={value.sortProperyt == obj.sortProperyt ? "active" : ''
+                            }>
+                            {obj.name}
+                        </li>
                     )}
                 </ul>
             </div>
