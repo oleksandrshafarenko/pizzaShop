@@ -26,9 +26,7 @@ const Home = () => {
     const sortItem = sort
     const {currentPage} = useSelector((state) => state.filter)
 
-    const skeletons = [...new Array(itemInPage)].map((_, id) => <Skeleton key={id} />)
-    const renderPizza = pizzaItem.filter(obj => obj.title.toUpperCase().includes(findPizzaValue.toUpperCase()))
-        .map((elem, id) => <PizzaBlock key={elem.imageUrl} {...elem} />)
+
         
     const howManyPage = (number) => {
         const result = Math.ceil((number +2) / itemInPage)
@@ -99,6 +97,12 @@ const Home = () => {
         isMounted.current = true
     },[categoriItem, sortItem, currentPage, findPizzaValue])
 
+
+    const skeletons = [...new Array(itemInPage)].map((_, id) => <Skeleton key={id} />)
+    const renderPizza = pizzaItem.filter(obj => obj.title.toUpperCase().includes(findPizzaValue.toUpperCase()))
+        .map((elem, id) => <PizzaBlock key={elem.imageUrl} {...elem} />)
+
+        
     return (
         <>
             <div className="container">
