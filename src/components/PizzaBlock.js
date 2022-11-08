@@ -1,4 +1,3 @@
-import { click } from "@testing-library/user-event/dist/click";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/slices/cartSlice";
@@ -8,8 +7,9 @@ const PizzaBlock = ({id, category, imageUrl, price, rating, sizes, title, types}
   const [PizzaCount, setPizzaCount] = useState(0)
   const [activeType,setActiveType] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
-console.log(activeType)
+
   const typeSizePiza = ["тонка",'традиційна']
+  
   const dispatch = useDispatch()
   const cartItem = useSelector((state) => state.cart.items.find(obj => obj.id === id))
   const addedCount = cartItem ? cartItem.count : 0
@@ -21,7 +21,7 @@ console.log(activeType)
       price,
       imageUrl,
       type: typeSizePiza[activeType] ,
-      size: activeSize
+      size: sizes[activeSize]
     }
     setPizzaCount(prew => prew +1)
     dispatch(addItem(item))
