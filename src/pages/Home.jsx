@@ -7,6 +7,7 @@ import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import { setCategory, setSort, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
+import { setItems, fetchPizzas } from "../redux/slices/pizzaSlice";
 import { useSelector, useDispatch } from "react-redux";
 import qs from 'qs'
 import { useNavigate } from "react-router-dom";
@@ -14,20 +15,19 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const  {categoriItem, sort, currentPage} = useSelector((state) => state.filter)
+    const  {items, status} = useSelector((state) => state.pizza)
+
     const isSearch = useRef(false)
     const isMounted = useRef(false)
-    const [pizzaItem, setPizzaItem] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [pizzaTotalPages, setPizzaTotalPages] = useState(1)
     const [isLoadingPage, setIsLoadingPage] = useState(false)
+
     const {findPizzaValue} = useContext(SearchContext)
+    const [pizzaTotalPages, setPizzaTotalPages] = useState(1)
+    
     const itemInPage = 6
-    const {categoriItem, sort} = useSelector((state) => state.filter)
     const sortItem = sort
-    const {currentPage} = useSelector((state) => state.filter)
-
-
-        
+    
     const howManyPage = (number) => {
         const result = Math.ceil((number +2) / itemInPage)
         return setPizzaTotalPages(result)
@@ -37,17 +37,19 @@ const Home = () => {
        dispatch(setCurrentPage(number))
     }
 
-    const fetchPizzas = () => {
-        setIsLoading(true)
+    const  getPizzas = async () => {
         const order = sortItem.sortProperyt.includes('-') ? 'asc' : 'desc'
         const sortBy = sortItem.sortProperyt.replace('-', '')
         const category = categoriItem > 0 ? `category=${categoriItem}` : ''
 
-        axios.get(`https://6317b24bece2736550b95b29.mockapi.io/pizza?page=${currentPage}&limit=${itemInPage}&${category}&sortBy=${sortBy}&order=${order}`)
-        .then(resp => {
-            setPizzaItem(resp.data);
-            setIsLoading(false)
-        })
+        dispatch(fetchPizzas({
+            order,
+            sortBy,
+            category,
+            currentPage,
+            itemInPage,
+        }))
+ 
         window.scrollTo(0, 0)
     }
 
@@ -79,9 +81,7 @@ const Home = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
 
-        if(!isSearch.current){
-            fetchPizzas()
-        }
+        getPizzas()
 
        isSearch.current = false
     }, [categoriItem, sortItem, currentPage, findPizzaValue])
@@ -99,10 +99,9 @@ const Home = () => {
 
 
     const skeletons = [...new Array(itemInPage)].map((_, id) => <Skeleton key={id} />)
-    const renderPizza = pizzaItem.filter(obj => obj.title.toUpperCase().includes(findPizzaValue.toUpperCase()))
+    const renderPizza = items.filter(obj => obj.title.toUpperCase().includes(findPizzaValue.toUpperCase()))
         .map((elem, id) => <PizzaBlock key={elem.imageUrl} {...elem} />)
 
-        
     return (
         <>
             <div className="container">
@@ -112,7 +111,7 @@ const Home = () => {
                 </div>
                 <h2 className="content__title">Всі піци</h2>
                 <div className="content__items">
-                    {isLoading ? skeletons : renderPizza}
+                    {status === 'loading' ? skeletons : renderPizza}
                 </div>
                 {isLoadingPage && 
                     <Pagination 
