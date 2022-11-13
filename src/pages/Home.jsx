@@ -110,9 +110,21 @@ const Home = () => {
                     <Sort value={sortItem} onClickSort={(value) => dispatch(setSort(value))} />
                 </div>
                 <h2 className="content__title">Всі піци</h2>
-                <div className="content__items">
+                {status === 'error' ?  (
+                    <div className="content__error-info">
+                        <h2>
+                            Сталась помилка
+                        </h2>
+                        <p>Список піц не загрузився</p>
+                    </div>
+                )
+
+                 : 
+                    (<div className="content__items">
                     {status === 'loading' ? skeletons : renderPizza}
-                </div>
+                </div>)
+                }
+                
                 {isLoadingPage && 
                     <Pagination 
                         valuePage={currentPage} 
