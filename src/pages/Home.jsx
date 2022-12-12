@@ -5,8 +5,8 @@ import Sort, { sortItems } from "../components/Sort";
 import Skeleton from "../components/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
-import { setCategory, setSort, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
+//import { SearchContext } from "../App";
+import { setCategory, setSort, setCurrentPage, setFilters, setSearchValue } from "../redux/slices/filterSlice";
 import { setItems, fetchPizzas } from "../redux/slices/pizzaSlice";
 import { useSelector, useDispatch } from "react-redux";
 import qs from 'qs'
@@ -15,14 +15,14 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const  {categoriItem, sort, currentPage} = useSelector((state) => state.filter)
+    const  {categoriItem, sort, currentPage, searchValue} = useSelector((state) => state.filter)
     const  {items, status} = useSelector((state) => state.pizza)
 
     const isSearch = useRef(false)
     const isMounted = useRef(false)
     const [isLoadingPage, setIsLoadingPage] = useState(false)
-
-    const {findPizzaValue} = useContext(SearchContext)
+    const findPizzaValue = searchValue
+   // const {findPizzaValue} = useContext(SearchContext)
     const [pizzaTotalPages, setPizzaTotalPages] = useState(1)
     
     const itemInPage = 6

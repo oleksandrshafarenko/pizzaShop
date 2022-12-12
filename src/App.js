@@ -10,15 +10,15 @@ import NotFound from './components/NotFoundBlock';
 import { Route, Routes } from 'react-router-dom';
 import Card from './pages/Card';
 
-export const SearchContext = createContext()
+//export const SearchContext = createContext()
 
 function App() {
-  const [findPizzaValue, setFindPizzaValue] = useState('')
+  //const [findPizzaValue, setFindPizzaValue] = useState('')
 
   return (
     <div className="App">
       <div className="wrapper">
-        <SearchContext.Provider value={{ findPizzaValue, setFindPizzaValue }}>
+       
           <Headers/>
           <div className="content">
             <Routes>
@@ -26,7 +26,7 @@ function App() {
               <Route path='*' element={<Card />} />
             </Routes>
           </div>
-        </SearchContext.Provider>
+        
       </div>
     </div>
 
